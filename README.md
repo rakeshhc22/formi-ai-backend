@@ -6,25 +6,28 @@ A backend service that powers an AI-driven voice agent using [Retell AI](https:/
 
 ## 📌 Features
 
-- 🎙️ **Live voice integration** via Retell AI
-- 📊 **CSV Query API** for availability checks from datasets
-- 🧾 **Call logging** with full details stored to **Google Sheets**
-- 🧠 AI-powered dynamic response generation
-- 🌐 Ready for deployment via Ngrok or LocalTunnel
+- 🎙️ Live voice integration via Retell AI
+- 📊 CSV Query API for availability checks from datasets
+- 🧾 Call logging with full details stored to Google Sheets
+- 🧠 AI-powered dynamic response generation (optional)
+- 🌐 Tunnel-ready for deployment via Ngrok or LocalTunnel
 
 ---
 
 ## 🚀 Technologies Used
 
-- **Node.js** + **Express**
-- **Retell AI** for voice agent
-- **Google Sheets API** for call logging
-- **CSV Parsing** using `csv-parser`
-- **OpenAI API (optional)** for dynamic response generation
+- Node.js + Express
+- Retell AI API for voice agent
+- Google Sheets API for call logging
+- CSV parsing using `csv-parser`
+- OpenAI API (optional) for smart response generation
+- dotenv for environment variables
 
 ---
 
-## 🏁 Folder Structure
+## 📁 Folder Structure
+
+```
 formi-ai-backend/
 ├── public/formi/         # All CSV datasets (e.g., rooms, cities, weather)
 ├── src/
@@ -37,78 +40,79 @@ formi-ai-backend/
 ├── server.js             # Entry point
 ├── .env                  # Environment variables (❌ DO NOT PUSH)
 └── README.md
-
-
+```
 
 ---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file:
+Create a `.env` file in the root directory:
 
 ```env
 PORT=3000
 SHEET_ID=your_google_sheet_id_here
+```
 
 ---
-##🔑 Google Sheets Setup
-Go to Google Cloud Console
 
-Create a project → Enable Google Sheets API
+## 🔑 Google Sheets Setup
 
-Create a Service Account
+To set up Google Sheets integration:
 
-Download the JSON credentials and save as:
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project.
+3. Enable the **Google Sheets API** for the project.
+4. Create a **Service Account**.
+5. Download the service account's **JSON key**.
+6. Save the file to:
 
+   ```text
+   src/credentials/gsheet-key.json
+   ```
 
+7. Open your Google Sheet and **share it** with the service account email from the JSON.
 
 ---
 
 ## 🧪 Local Development
+
 Install dependencies:
+
 ```bash
 npm install
+```
 
 Run the server:
 
-This will:
-- Show `"src/credentials/gsheet-key.json"` as a code block
-- Correctly format the next heading `## 🧪 Local Development`
+```bash
+node server.js
+```
+
+(Optional) To expose your local server for Retell AI to access webhooks:
+
+**Using LocalTunnel:**
+
+```bash
+npx localtunnel --port 3000
+```
+
+**Using Ngrok:**
+
+```bash
+ngrok http 3000
+```
 
 ---
 
-### ✅ Final Result (preview will look like this):
+## 🔄 API Endpoints
 
-> 📁 Download the JSON credentials and save as:
-> ```
-> src/credentials/gsheet-key.json
-> ```
+### 🔍 POST `/api/query`
 
-> ## 🧪 Local Development  
-> Install dependencies:  
-> `npm install`  
-> Run the server:  
-> `npm start`
+Query data from a CSV file.
 
-Let me know if you'd like the updated full `README.md` again with these corrections applied.
+**Example Request Body:**
 
-bash
-Copy code
-node server.js
-(Optional) Use tunnel:
-
-bash
-Copy code
-lt --port 3000
-# or use ngrok if installed
-ngrok http 3000
-
-🔄 API Endpoints
-🔍 POST /api/query
-Query CSV data dynamically.
-
-json
-Copy code
+```json
 {
   "source": "activities",
   "filters": [
@@ -116,11 +120,17 @@ Copy code
     { "column_name": "Type", "value": "Indoor" }
   ]
 }
-🧾 POST /api/log
-Logs a call summary to Google Sheets.
+```
 
-json
-Copy code
+---
+
+### 🧾 POST `/api/log`
+
+Log a call summary to Google Sheets.
+
+**Example Request Body:**
+
+```json
 {
   "call_time": "2025-07-21 19:20:00",
   "phone_number": "9876543210",
@@ -132,29 +142,34 @@ Copy code
   "num_guests": 2,
   "call_summary": "Customer inquired about Executive Room for 2 guests from 10 to 12 August."
 }
-🎙️ Retell AI Setup
-Go to Retell AI Dashboard
+```
 
-Create a voice agent → Paste your tunnel URL + /retell-webhook as custom function
+---
 
-Link the agent to your user → Test in the Retell Simulator
+## 🎙️ Retell AI Setup
 
-🧩 Future Improvements
-Error handling and retry logic
+1. Go to your [Retell AI Dashboard](https://www.retellai.com/)
+2. Create a voice agent and paste your public tunnel URL (from LocalTunnel or Ngrok) followed by `/retell-webhook`
+3. Link the agent to a phone number or test user
+4. Use the Retell Simulator for live testing
 
-AI-powered fallback responses via OpenAI
+---
 
-Frontend UI for managing logs and visualizing analytics
+## 🧩 Future Improvements
 
-👨‍💻 Author
-Rakesh H C
-GitHub
+- Add validation and error handling
+- Integrate OpenAI fallback responses
+- Build a frontend dashboard for call logs and analytics
 
-🛡️ Disclaimer
-This project uses a Google Service Account. Do not upload gsheet-key.json or .env to GitHub. These files are sensitive and should remain private.
+---
 
-vbnet
-Copy code
+## 👨‍💻 Author
 
-Let me know if you want a shorter version or if you're submitting it for academic review — I’ll help adjust! ✅
+**Rakesh H C**  
+GitHub: [@rakeshhc22](https://github.com/rakeshhc22)
 
+---
+
+## 🛡️ Disclaimer
+
+This project uses a Google Service Account. **Never upload `gsheet-key.json` or `.env` to GitHub**. These files are sensitive and must remain private.
