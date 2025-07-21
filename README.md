@@ -26,17 +26,18 @@ A backend service that powers an AI-driven voice agent using [Retell AI](https:/
 
 ## 🏁 Folder Structure
 formi-ai-backend/
-├── public/formi/ # All CSV datasets (rooms, cities, weather, etc.)
+├── public/formi/         # All CSV datasets (e.g., rooms, cities, weather)
 ├── src/
-│ ├── controllers/ # Main route logic
-│ ├── credentials/ # gsheet-key.json (not pushed to GitHub)
-│ ├── data/ # Additional CSV files
-│ ├── routes/ # Express routers
-│ ├── services/ # Google Sheets, response generation, tokenizer
-│ └── utils/ # CSV parsing helpers
-├── server.js # Entry point
-├── .env # Environment variables (not pushed)
+│   ├── controllers/      # Route logic
+│   ├── credentials/      # gsheet-key.json (❌ DO NOT PUSH)
+│   ├── data/             # Additional CSV files
+│   ├── routes/           # Express routers
+│   ├── services/         # Sheets API, response generation, tokenizer
+│   └── utils/            # CSV parsing helpers
+├── server.js             # Entry point
+├── .env                  # Environment variables (❌ DO NOT PUSH)
 └── README.md
+
 
 
 ---
@@ -49,26 +50,47 @@ Create a `.env` file:
 PORT=3000
 SHEET_ID=your_google_sheet_id_here
 
-
-🔑 Google Sheets Setup
+---
+##🔑 Google Sheets Setup
 Go to Google Cloud Console
 
-Create project → Enable Google Sheets API
+Create a project → Enable Google Sheets API
 
-Create Service Account
+Create a Service Account
 
-Download JSON → Save as: src/credentials/gsheet-key.json
-
-Share your Google Sheet with the Service Account Email
+Download the JSON credentials and save as:
 
 
-🧪 Local Development
+
+---
+
+## 🧪 Local Development
 Install dependencies:
-
-bash
-Copy code
+```bash
 npm install
+
 Run the server:
+
+This will:
+- Show `"src/credentials/gsheet-key.json"` as a code block
+- Correctly format the next heading `## 🧪 Local Development`
+
+---
+
+### ✅ Final Result (preview will look like this):
+
+> 📁 Download the JSON credentials and save as:
+> ```
+> src/credentials/gsheet-key.json
+> ```
+
+> ## 🧪 Local Development  
+> Install dependencies:  
+> `npm install`  
+> Run the server:  
+> `npm start`
+
+Let me know if you'd like the updated full `README.md` again with these corrections applied.
 
 bash
 Copy code
