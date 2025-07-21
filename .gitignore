@@ -1,2 +1,3 @@
 .env
 src/credentials/gsheet-key.json
+node_modules/
